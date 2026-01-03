@@ -4,14 +4,17 @@ package io.github.gmachadojao.back_end.Services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.gmachadojao.back_end.Config.JsonEnum;
 import io.github.gmachadojao.back_end.DTO.JsonNodeDTO;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class JsonServices {
@@ -28,7 +31,7 @@ public class JsonServices {
         JsonNodeDTO dto = new JsonNodeDTO();
         dto.setId(UUID.randomUUID().toString());
         dto.setKey(key);
-        dto.setType(node.getNodeType().name());
+        dto.setType(mapNodeType(node));
 
         if (node.isObject()) {
             List<JsonNodeDTO> children = new ArrayList<>();
@@ -56,6 +59,24 @@ public class JsonServices {
             }
         }
 
+        log.info("Parsed node: {}", dto);
         return dto;
+    }
+
+    private JsonEnum mapNodeType(JsonNode node) {
+        if (node.isObject()) {
+            return JsonEnum.OBJECT;
+        } else if (node.isArray()) {
+            return JsonEnum.ARRAY;
+        } else if (node.isTextual()) {
+            return JsonEnum.STRING;
+        } else if (node.isNumber()) {
+            return JsonEnum.NUMBER;
+        } else if (node.isBoolean()) {
+            return JsonEnum.BOOLEAN;
+        } else if (node.isNull()) {
+            return JsonEnum.NULL;
+        }
+        return JsonEnum.NULL;
     }
 }

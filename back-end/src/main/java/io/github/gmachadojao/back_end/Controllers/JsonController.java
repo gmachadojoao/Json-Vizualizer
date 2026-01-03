@@ -1,6 +1,7 @@
 package io.github.gmachadojao.back_end.Controllers;
 
 import io.github.gmachadojao.back_end.Services.JsonServices;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class JsonController {
     }
 
     @PostMapping("/parse")
-    public String parse(@RequestBody String json) {
+    public String parse( @RequestBody(required = true) @Size(max = 1048576) String json) {
         try {
             return jsonServices.parseJson(json);
         } catch (Exception e) {

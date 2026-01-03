@@ -1,0 +1,15 @@
+<div class="node">
+  <strong>{{ node.key }}</strong>
+  <span>({{ node.type }})</span>
+
+  <span *ngIf="node.value !== undefined">
+    : {{ node.value }}
+  </span>
+
+  <div class="children" *ngIf="node.children?.length">
+    <app-node
+      *ngFor="let child of node.children"
+      [node]="child">
+    </app-node>
+  </div>
+</div>

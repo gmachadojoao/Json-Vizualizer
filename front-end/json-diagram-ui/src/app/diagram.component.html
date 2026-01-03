@@ -1,0 +1,40 @@
+<div class="diagram-container">
+  <div class="input-section">
+    <h2>Cole seu JSON aqui</h2>
+
+    <textarea
+      [(ngModel)]="jsonInput"
+      placeholder='{"exemplo": "cole seu JSON aqui", "valores": [1, 2, 3]}'
+      rows="15"
+      class="json-input"
+      [disabled]="loading">
+    </textarea>
+
+    <div class="button-group">
+      <button
+        (click)="generateDiagram()"
+        [disabled]="loading || !jsonInput.trim()"
+        class="btn btn-primary">
+        {{ loading ? 'Processando...' : 'Gerar Diagrama' }}
+      </button>
+
+      <button
+        (click)="clearInput()"
+        [disabled]="loading"
+        class="btn btn-secondary">
+        Limpar
+      </button>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  </div>
+
+  <div class="output-section" *ngIf="diagram">
+    <h2>Diagrama Gerado</h2>
+    <div class="diagram-output">
+      <app-node [node]="diagram"></app-node>
+    </div>
+  </div>
+</div>

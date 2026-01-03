@@ -1,0 +1,22 @@
+<div class="container">
+
+  <h1>JSON → Diagrama Visual</h1>
+
+  <textarea
+    rows="12"
+    placeholder="Cole seu JSON aqui"
+    [(ngModel)]="jsonInput">
+  </textarea>
+
+  <button (click)="generateDiagram()">
+    Gerar diagrama
+  </button>
+
+  <p *ngIf="loading">Processando...</p>
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+  <div *ngIf="diagram">
+    <app-node [node]="diagram"></app-node>
+  </div>
+
+</div>

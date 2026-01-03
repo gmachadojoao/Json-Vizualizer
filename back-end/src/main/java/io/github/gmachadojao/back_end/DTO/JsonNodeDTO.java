@@ -1,5 +1,6 @@
 package io.github.gmachadojao.back_end.DTO;
 
+import io.github.gmachadojao.back_end.Config.JsonEnum;
 import lombok.Data;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class JsonNodeDTO {
     private String id;
     private String key;
-    private String type; // object, array, string, number, boolean, null
-    private Object value; // for primitive values
+    private JsonEnum type;
+    private Object value;
     private List<JsonNodeDTO> children;
 }
